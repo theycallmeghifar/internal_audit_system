@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aldis.Application\Aldis.Application.csproj" />
+    <ProjectReference Include="..\Aldis.Contracts\Aldis.Contracts.csproj" />
+    <ProjectReference Include="..\Aldis.Domain\Aldis.Domain.csproj" />
+    <ProjectReference Include="..\Aldis.Infrastructure\Aldis.Infrastructure.csproj" />
+    <ProjectReference Include="..\Aldis.Persistence\Aldis.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
