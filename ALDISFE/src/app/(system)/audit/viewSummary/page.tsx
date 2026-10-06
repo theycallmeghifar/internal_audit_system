@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import CategoryClient from "./categoryClient";
+import ViewSummaryClient from "./viewSummaryClient";
 
 export const metadata: Metadata = {
-  title: "Category",
+  title: "Fill Audit",
 };
 
 export default function UserPage() {
-  return <CategoryClient />;
+  return <ViewSummaryClient />;
 }

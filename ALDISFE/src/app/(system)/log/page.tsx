@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LogClient from "./logClient";
 
 export const metadata: Metadata = {
-  title: "User",
+  title: "Activity Log",
 };
 
 export default function LogPage() {

@@ -233,6 +233,660 @@ a {
   min-height: 0 !important;
 }
 
+.aldis-dashboard {
+  --ad-ink: #354052;
+  --ad-muted: #6c7788;
+  --ad-border: #e8edf3;
+  color: var(--ad-ink);
+}
+.aldis-dashboard .card {
+  border: 1px solid var(--ad-border);
+  border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(35, 49, 76, 0.04);
+}
+.aldis-dashboard h2 {
+  color: var(--ad-ink);
+}
+.aldis-dashboard .ad-muted {
+  color: var(--ad-muted);
+}
+.aldis-dashboard .ad-filter-heading {
+  margin: 0;
+  font-size: 14px;
+}
+.aldis-dashboard .ad-filter-toggle {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 20px;
+  color: var(--ad-ink);
+  text-align: left;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.aldis-dashboard .ad-filter-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+}
+.aldis-dashboard .ad-filter-title i {
+  font-size: 23px;
+  color: #3f6ad8;
+}
+.aldis-dashboard .ad-filter-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ad-muted);
+  font-size: 12px;
+}
+.aldis-dashboard .ad-filter-right i {
+  font-size: 25px;
+}
+.aldis-dashboard .ad-filter-body {
+  border-top: 1px solid var(--ad-border);
+  padding: 18px 20px;
+}
+.aldis-dashboard .ad-filter-body[hidden] {
+  display: none;
+}
+.aldis-dashboard .ad-filter-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+}
+.aldis-dashboard .ad-month-field {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.aldis-dashboard .ad-month-field legend {
+  float: none;
+  width: auto;
+  margin: 0 0 7px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.aldis-dashboard .ad-month-inputs {
+  display: grid;
+  grid-template-columns: minmax(105px, 1.5fr) minmax(80px, 1fr);
+  gap: 8px;
+}
+.aldis-dashboard .ad-month-inputs .form-control {
+  font-size: 13px;
+  height: 38px;
+  border-color: #dbe2ea;
+  border-radius: 5px;
+}
+.aldis-dashboard .ad-month-inputs [aria-invalid="true"] {
+  border-color: #dc3545;
+}
+.aldis-dashboard .ad-filter-actions {
+  display: flex;
+  gap: 8px;
+}
+.aldis-dashboard .ad-filter-actions .btn {
+  height: 38px;
+  white-space: nowrap;
+}
+.aldis-dashboard .ad-filter-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 17px;
+  font-size: 11px;
+}
+.aldis-dashboard .ad-presets {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  color: var(--ad-muted);
+}
+.aldis-dashboard .ad-presets button {
+  color: #3155b5;
+  background: #f1f5fe;
+  border: 1px solid #e6edfc;
+  border-radius: 5px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.aldis-dashboard .ad-presets button:hover {
+  background: #e4ecfc;
+}
+.aldis-dashboard .ad-pending-filter {
+  color: #805600;
+}
+.aldis-dashboard .ad-overview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 0 14px;
+}
+.aldis-dashboard .ad-overview-heading h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+.aldis-dashboard .ad-overview-heading p {
+  font-size: 12px;
+  color: var(--ad-muted);
+  margin: 0;
+}
+.aldis-dashboard .ad-overview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.aldis-dashboard .ad-demo-badge {
+  background: #fff5df;
+  color: #805600;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 8px;
+  border-radius: 4px;
+}
+.aldis-dashboard .ad-period-label {
+  display: inline-block;
+  border: 1px solid var(--ad-border);
+  border-radius: 5px;
+  padding: 5px 9px;
+  font-size: 11px;
+  color: #59667a;
+  background: #fafbfd;
+  white-space: nowrap;
+}
+.aldis-dashboard .ad-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+.aldis-dashboard .ad-kpi {
+  padding: 16px 17px;
+  min-width: 0;
+}
+.aldis-dashboard .ad-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.aldis-dashboard .ad-kpi h2 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+.aldis-dashboard .ad-kpi-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 19px;
+}
+.aldis-dashboard .ad-kpi-value {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 9px 0 5px;
+  font-variant-numeric: tabular-nums;
+}
+.aldis-dashboard .ad-kpi p {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ad-muted);
+  margin: 0;
+}
+.aldis-dashboard .ad-card-heading {
+  padding: 21px 20px 17px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.aldis-dashboard .ad-card-heading h2 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 5px;
+}
+.aldis-dashboard .ad-card-heading p {
+  font-size: 12px;
+  color: var(--ad-muted);
+  margin: 0;
+}
+.aldis-dashboard .ad-chart-card .card-body {
+  padding: 0 20px 18px;
+}
+.aldis-dashboard .ad-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 18px;
+  color: #667286;
+  font-size: 11px;
+}
+.aldis-dashboard .ad-legend > span,
+.aldis-dashboard .ad-chart-details > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.aldis-dashboard .ad-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.aldis-dashboard .ad-axis-caption {
+  color: var(--ad-muted);
+  font-size: 10px;
+  margin: 20px 0 5px;
+}
+.aldis-dashboard .ad-month-chart {
+  display: flex;
+  min-width: 0;
+}
+.aldis-dashboard .ad-y-axis {
+  flex: 0 0 32px;
+  height: 210px;
+  margin-top: 23px;
+  position: relative;
+  color: var(--ad-muted);
+  font-size: 10px;
+}
+.aldis-dashboard .ad-y-axis > span {
+  position: absolute;
+  left: 0;
+  transform: translateY(-50%);
+}
+.aldis-dashboard .ad-month-scroll {
+  overflow-x: auto;
+  min-width: 0;
+  flex: 1;
+  padding-top: 23px;
+  padding-bottom: 5px;
+}
+.aldis-dashboard .ad-month-canvas {
+  position: relative;
+}
+.aldis-dashboard .ad-chart-grid {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 210px;
+  pointer-events: none;
+}
+.aldis-dashboard .ad-chart-grid > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed #e5ebf2;
+}
+.aldis-dashboard .ad-chart-grid > span:last-child {
+  border-top-style: solid;
+}
+.aldis-dashboard .ad-month-columns {
+  position: relative;
+  display: grid;
+  gap: 4px;
+}
+.aldis-dashboard .ad-month-column {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ad-muted);
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: inherit;
+}
+.aldis-dashboard .ad-column-plot {
+  display: block;
+  height: 210px;
+  position: relative;
+}
+.aldis-dashboard .ad-column-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48%;
+  max-width: 42px;
+  min-width: 14px;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+}
+.aldis-dashboard .ad-column-stack > span {
+  display: block;
+  flex-shrink: 0;
+  width: 100%;
+}
+.aldis-dashboard .ad-column-total {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-bottom: 6px;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 600;
+  color: #59667a;
+}
+.aldis-dashboard .ad-column-label {
+  display: block;
+  padding: 11px 1px 5px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+.aldis-dashboard .ad-column-label small {
+  display: block;
+  color: #8791a0;
+  font-size: 9px;
+  margin-top: 2px;
+}
+.aldis-dashboard .ad-month-column:hover .ad-column-label,
+.aldis-dashboard .ad-month-column.is-active .ad-column-label {
+  color: #3155b5;
+  background: #f0f4ff;
+  border-radius: 5px;
+}
+.aldis-dashboard button:focus-visible,
+.aldis-dashboard .ad-month-scroll:focus-visible {
+  outline: 2px solid #3f6ad8;
+  outline-offset: 3px;
+}
+.aldis-dashboard .ad-chart-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 17px;
+  padding: 11px 13px;
+  margin-top: 16px;
+  background: #f7f9fc;
+  border: 1px solid #edf1f6;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #59667a;
+}
+.aldis-dashboard .ad-chart-details > strong {
+  color: var(--ad-ink);
+}
+.aldis-dashboard .ad-chart-note {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ad-muted);
+  margin: 13px 0 0;
+}
+.aldis-dashboard .ad-horizontal-card {
+  width: 100%;
+}
+.aldis-dashboard .ad-horizontal-card .card-body {
+  display: flex;
+  flex-direction: column;
+}
+.aldis-dashboard .ad-horizontal-card .ad-chart-note {
+  margin-top: auto;
+  padding-top: 15px;
+}
+.aldis-dashboard .ad-horizontal-rows {
+  padding-top: 19px;
+  padding-bottom: 7px;
+}
+.aldis-dashboard .ad-horizontal-row {
+  margin-bottom: 17px;
+}
+.aldis-dashboard .ad-horizontal-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 7px;
+  font-size: 12px;
+}
+.aldis-dashboard .ad-horizontal-label > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.aldis-dashboard .ad-horizontal-label strong {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+.aldis-dashboard .ad-horizontal-label small {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--ad-muted);
+}
+.aldis-dashboard .ad-horizontal-track {
+  display: flex;
+  height: 19px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f0f3f7;
+}
+.aldis-dashboard .ad-horizontal-segment {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+.aldis-dashboard .ad-horizontal-axis {
+  display: flex;
+  justify-content: space-between;
+  color: #7a8798;
+  font-size: 10px;
+}
+.aldis-dashboard .ad-count-badge {
+  display: inline-block;
+  font-size: 11px;
+  color: #3155b5;
+  padding: 3px 7px;
+  background: #edf2ff;
+  border-radius: 5px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.aldis-dashboard .ad-audit-table {
+  min-width: 860px;
+  font-size: 12px;
+}
+.aldis-dashboard .ad-audit-table thead th {
+  padding: 12px 16px;
+  color: #657185;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  background: #f7f9fc;
+  border-top: 1px solid var(--ad-border);
+  border-bottom: 1px solid var(--ad-border);
+}
+.aldis-dashboard .ad-audit-table td {
+  padding: 14px 16px;
+  border-color: #edf1f6;
+  vertical-align: middle;
+}
+.aldis-dashboard .ad-audit-table td:nth-child(2) {
+  min-width: 240px;
+  max-width: 350px;
+}
+.aldis-dashboard .ad-audit-id {
+  display: block;
+  color: #3155b5;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.aldis-dashboard .ad-audit-title {
+  display: block;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.aldis-dashboard .ad-person {
+  display: block;
+  line-height: 1.7;
+}
+.aldis-dashboard .ad-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.aldis-dashboard .ad-status .ad-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.aldis-dashboard .ad-table-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 20px;
+  border-top: 1px solid var(--ad-border);
+  color: var(--ad-muted);
+  font-size: 11px;
+}
+.aldis-dashboard .ad-pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.aldis-dashboard .ad-pagination .btn {
+  font-size: 11px;
+}
+.aldis-dashboard .ad-empty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 210px;
+  text-align: center;
+  padding: 30px 20px;
+}
+.aldis-dashboard .ad-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  background: #f1f5fa;
+  border-radius: 50%;
+  color: #7e8ba1;
+  font-size: 27px;
+  margin-bottom: 4px;
+}
+.aldis-dashboard .ad-empty strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+.aldis-dashboard .ad-empty p {
+  margin: 0;
+  color: var(--ad-muted);
+  font-size: 12px;
+}
+.aldis-dashboard .ad-no-data {
+  border: 1px solid var(--ad-border);
+  color: var(--ad-muted);
+  font-size: 12px;
+}
+.aldis-dashboard .ad-dashboard-note {
+  font-size: 11px;
+  color: var(--ad-muted);
+  margin: 0 0 6px;
+}
+@media (max-width: 1199px) {
+  .aldis-dashboard .ad-kpi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .aldis-dashboard .ad-filter-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .aldis-dashboard .ad-filter-actions {
+    grid-column: 1 / -1;
+  }
+  .aldis-dashboard .ad-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .aldis-dashboard .ad-kpi:last-child {
+    grid-column: 1 / -1;
+  }
+  .aldis-dashboard .ad-card-heading {
+    flex-wrap: wrap;
+  }
+  .aldis-dashboard .ad-overview-heading {
+    align-items: flex-start;
+  }
+}
+@media (max-width: 479px) {
+  .aldis-dashboard .ad-filter-fields {
+    grid-template-columns: 1fr;
+  }
+  .aldis-dashboard .ad-filter-body,
+  .aldis-dashboard .ad-filter-toggle {
+    padding: 15px;
+  }
+  .aldis-dashboard .ad-filter-right {
+    gap: 4px;
+    font-size: 10px;
+  }
+  .aldis-dashboard .ad-kpi {
+    padding: 14px;
+  }
+  .aldis-dashboard .ad-kpi-top {
+    align-items: flex-start;
+  }
+  .aldis-dashboard .ad-kpi h2 {
+    font-size: 11px;
+  }
+  .aldis-dashboard .ad-kpi-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 17px;
+  }
+  .aldis-dashboard .ad-kpi-value {
+    font-size: 28px;
+  }
+  .aldis-dashboard .ad-overview-heading {
+    flex-direction: column;
+  }
+  .aldis-dashboard .ad-card-heading {
+    padding: 17px 15px;
+  }
+  .aldis-dashboard .ad-chart-card .card-body {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
 /* modal */
 .aldis-modal {
   position: fixed !important;
@@ -937,5 +1591,224 @@ select.aldis-select2[multiple]
 
   .aldis-check-context {
     margin-bottom: 12px;
+  }
+}
+
+/* finding kpi style */
+.aldis-finding-kpis .afk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+.aldis-finding-kpis .afk-card {
+  --afk-accent: #345ac2;
+  --afk-soft: #edf2ff;
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  margin: 0;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid #e5ebf3;
+  border-radius: 14px;
+  background: #fff;
+  color: #25334a;
+  box-shadow: 0 4px 18px rgba(28, 46, 83, 0.045);
+  transition: box-shadow 160ms ease;
+}
+.aldis-finding-kpis .afk-card:hover {
+  box-shadow: 0 8px 24px rgba(28, 46, 83, 0.09);
+}
+.aldis-finding-kpis .afk-card--required {
+  --afk-accent: #96600b;
+  --afk-soft: #fff5df;
+  --afk-bar: #dea027;
+}
+.aldis-finding-kpis .afk-card--review {
+  --afk-accent: #08738f;
+  --afk-soft: #e9f7fc;
+  --afk-bar: #2795b7;
+}
+.aldis-finding-kpis .afk-card--approved {
+  --afk-accent: #177552;
+  --afk-soft: #e9f7ef;
+  --afk-bar: #289669;
+}
+.aldis-finding-kpis .afk-card--total {
+  border-color: transparent;
+  background: linear-gradient(135deg, #2444a5 0%, #365dcc 100%);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(46, 81, 176, 0.18);
+}
+.aldis-finding-kpis .afk-card--total::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -105px;
+  right: -85px;
+  width: 235px;
+  height: 235px;
+  border: 32px solid rgba(255, 255, 255, 0.065);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.aldis-finding-kpis .afk-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 19px;
+}
+.aldis-finding-kpis .afk-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--afk-soft);
+  color: var(--afk-accent);
+}
+.aldis-finding-kpis .afk-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 30px;
+  background: var(--afk-soft);
+  color: var(--afk-accent);
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.aldis-finding-kpis .afk-dot {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.aldis-finding-kpis .afk-title {
+  margin: 0 0 7px;
+  color: #526077;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.aldis-finding-kpis .afk-value {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  line-height: 1;
+}
+.aldis-finding-kpis .afk-value strong {
+  min-width: 0;
+  color: #25334a;
+  font-size: 42px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -1.3px;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.aldis-finding-kpis .afk-value > span {
+  color: #748198;
+  font-size: 11px;
+  font-weight: 400;
+}
+.aldis-finding-kpis .afk-description {
+  min-height: 36px;
+  margin: 9px 0 18px;
+  color: #748198;
+  font-size: 11px;
+  line-height: 1.65;
+}
+.aldis-finding-kpis .afk-footer {
+  margin-top: auto;
+  padding-top: 13px;
+  border-top: 1px solid #eef2f7;
+}
+.aldis-finding-kpis .afk-share {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+  color: #748198;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.aldis-finding-kpis .afk-share strong {
+  color: var(--afk-accent);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.aldis-finding-kpis .afk-track {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #edf1f6;
+}
+.aldis-finding-kpis .afk-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--afk-bar, var(--afk-accent));
+}
+.aldis-finding-kpis .afk-card--total .afk-icon,
+.aldis-finding-kpis .afk-card--total .afk-tag {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
+.aldis-finding-kpis .afk-card--total .afk-title {
+  color: #e1eaff;
+}
+.aldis-finding-kpis .afk-card--total .afk-value strong,
+.aldis-finding-kpis .afk-card--total .afk-share strong {
+  color: #fff;
+}
+.aldis-finding-kpis .afk-card--total .afk-value > span,
+.aldis-finding-kpis .afk-card--total .afk-description,
+.aldis-finding-kpis .afk-card--total .afk-share {
+  color: #dce6ff;
+}
+.aldis-finding-kpis .afk-card--total .afk-footer {
+  border-top-color: rgba(255, 255, 255, 0.17);
+}
+.aldis-finding-kpis .afk-card--total .afk-track {
+  background: rgba(255, 255, 255, 0.19);
+}
+.aldis-finding-kpis .afk-card--total .afk-track > span {
+  background: #b9d0ff;
+}
+@media (max-width: 1199px) {
+  .aldis-finding-kpis .afk-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+@media (max-width: 575px) {
+  .aldis-finding-kpis .afk-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .aldis-finding-kpis .afk-card {
+    padding: 20px;
+  }
+  .aldis-finding-kpis .afk-top {
+    margin-bottom: 15px;
+  }
+  .aldis-finding-kpis .afk-description {
+    min-height: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aldis-finding-kpis .afk-card {
+    transition: none;
   }
 }

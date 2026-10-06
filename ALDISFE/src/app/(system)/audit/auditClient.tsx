@@ -498,12 +498,13 @@ export default function AuditClient() {
                             </div>
                           </td>
                           <td className="text-center">
-                            <button
+                            <a
                               type="button"
                               className="btn-hover-shine btn btn-shadow btn-info"
+                              href="/audit/improvement/review"
                             >
                               Review Improvement
-                            </button>
+                            </a>
                           </td>
                         </tr>
                         <tr>
@@ -602,12 +603,13 @@ export default function AuditClient() {
                               >
                                 Export Report
                               </button>
-                              <button
+                              <a
                                 type="button"
                                 className="btn-hover-shine btn btn-shadow btn-success"
+                                href="/audit/viewSummary"
                               >
-                                Review Summary
-                              </button>
+                                View Summary
+                              </a>
                             </div>
                           </td>
                         </tr>
