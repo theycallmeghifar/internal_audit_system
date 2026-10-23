@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import CategoryClient from "./categoryClient";
 
 export const metadata: Metadata = {
-  title: "User",
+  title: "Category",
 };
 
 export default function UserPage() {

@@ -61,6 +61,7 @@ type FillImprovementProps = {
   onSubmit?: (formData: FormData) => Promise<void>;
 };
 
+const MIN_FILES_PER_FINDING = 1;
 const MAX_FILES_PER_FINDING = 3;
 const AUTOSAVE_DELAY = 1200;
 const DRAFT_DATABASE = "aldis-improvement-drafts";
@@ -220,7 +221,10 @@ function getImprovementStatus(draft: ImprovementDraft) {
   if (
     isValidDate(draft.completionDate) &&
     draft.causeAnalysis.trim() &&
-    draft.correctiveAction.trim()
+    draft.correctiveAction.trim() &&
+    draft.attachments.length >= MIN_FILES_PER_FINDING &&
+    draft.attachments.length <= MAX_FILES_PER_FINDING &&
+    draft.attachments.every(isAllowedFile)
   )
     return "Ready to Submit";
   if (
@@ -418,6 +422,7 @@ function ImprovementForm({
   );
   const [isRecoveryReady, setIsRecoveryReady] = useState(false);
   const [hasRecoveredSession, setHasRecoveredSession] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
   const [storageError, setStorageError] = useState("");
@@ -433,6 +438,21 @@ function ImprovementForm({
   const mountedRef = useRef(false);
   const submittingRef = useRef(false);
   const fileInputsRef = useRef<Record<string, HTMLInputElement | null>>({});
+
+  useEffect(() => {
+    function updateConnectionStatus() {
+      setIsOnline(navigator.onLine);
+    }
+
+    updateConnectionStatus();
+    window.addEventListener("online", updateConnectionStatus);
+    window.addEventListener("offline", updateConnectionStatus);
+
+    return () => {
+      window.removeEventListener("online", updateConnectionStatus);
+      window.removeEventListener("offline", updateConnectionStatus);
+    };
+  }, []);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -651,6 +671,23 @@ function ImprovementForm({
   const missingAssignment = findings.some(
     (finding) => !finding.picName || !isValidDate(finding.dueDate),
   );
+  const isSavingDraft = saveStatus === "pending" || saveStatus === "saving";
+  const submitDisabledReason = !isRecoveryReady
+    ? "Please wait while the improvement draft is loading."
+    : isSubmitting
+      ? "Please wait while the improvements are being submitted."
+      : !isOnline
+        ? "Reconnect to the network before submitting improvements."
+        : missingAssignment
+          ? "Every finding must have an assigned PIC and due date."
+          : !allReady
+            ? `Complete all required fields and upload ${MIN_FILES_PER_FINDING}–${MAX_FILES_PER_FINDING} PDF/image files for each finding.`
+            : isSavingDraft
+              ? "Please wait until the latest changes are saved."
+              : "";
+  const isSubmitDisabled = Boolean(submitDisabledReason);
+  const submitTooltip =
+    submitDisabledReason || "Submit the completed improvements.";
 
   async function handleBack() {
     if (submittingRef.current) return;
@@ -674,7 +711,7 @@ function ImprovementForm({
   }
 
   async function handleSubmitImprovement() {
-    if (!isRecoveryReady || submittingRef.current || !findings.length) return;
+    if (isSubmitDisabled || submittingRef.current || !findings.length) return;
     const firstIncomplete = findings.find(
       (finding) =>
         getImprovementStatus(draftsRef.current[finding.findingId]) !==
@@ -684,7 +721,7 @@ function ImprovementForm({
       setOpenFindingId(firstIncomplete.findingId);
       await Swal.fire({
         title: "Complete the improvement",
-        text: "Fill in the completion date, analysis or rationale, and action for every finding.",
+        text: `Fill in the completion date, analysis or rationale, and action. Upload ${MIN_FILES_PER_FINDING}–${MAX_FILES_PER_FINDING} valid PDF/image files for every finding.`,
         icon: "warning",
       });
       return;
@@ -701,6 +738,7 @@ function ImprovementForm({
       findings.some((finding) => {
         const files = draftsRef.current[finding.findingId].attachments;
         return (
+          files.length < MIN_FILES_PER_FINDING ||
           files.length > MAX_FILES_PER_FINDING ||
           files.some((file) => !isAllowedFile(file))
         );
@@ -708,7 +746,7 @@ function ImprovementForm({
     ) {
       await Swal.fire({
         title: "Check the attachments",
-        text: `Each finding accepts up to ${MAX_FILES_PER_FINDING} files: ${FILE_FORMATS}.`,
+        text: `Each finding requires ${MIN_FILES_PER_FINDING}–${MAX_FILES_PER_FINDING} files: ${FILE_FORMATS}.`,
         icon: "warning",
       });
       return;
@@ -800,17 +838,60 @@ function ImprovementForm({
     }
   }
 
-  const saveMessage = !isRecoveryReady
-    ? "Loading draft..."
-    : saveStatus === "saving"
-      ? "Saving draft..."
-      : saveStatus === "pending"
-        ? "Changes pending save"
-        : saveStatus === "saved"
-          ? "Draft and attachments saved on this device"
-          : saveStatus === "error"
-            ? "Draft could not be saved"
-            : "Draft changes are saved automatically on this device";
+  function renderSyncStatus() {
+    if (!isRecoveryReady) {
+      return <span className="text-muted">Loading draft...</span>;
+    }
+
+    if (saveStatus === "error") {
+      return (
+        <span className="text-danger">
+          <i className="lnr-warning mr-1" aria-hidden="true" />
+          Draft could not be saved
+        </span>
+      );
+    }
+
+    if (saveStatus === "pending" || saveStatus === "saving") {
+      return (
+        <span className="text-info">
+          <i className="lnr-sync mr-1" aria-hidden="true" />
+          Saving...
+        </span>
+      );
+    }
+
+    if (!isOnline) {
+      return (
+        <span className="text-warning">
+          <i className="lnr-warning mr-1" aria-hidden="true" />
+          Offline — changes are stored locally
+        </span>
+      );
+    }
+
+    if (saveStatus === "saved") {
+      return (
+        <>
+          <span className="text-success">
+            <i className="lnr-checkmark-circle mr-1" aria-hidden="true" />
+            All changes saved automatically
+          </span>
+
+          {lastSavedAt && (
+            <small className="text-muted ml-2">
+              {new Date(lastSavedAt).toLocaleTimeString("en-GB", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </small>
+          )}
+        </>
+      );
+    }
+
+    return <span className="text-muted">Changes are saved automatically</span>;
+  }
 
   return (
     <>
@@ -1169,15 +1250,12 @@ function ImprovementForm({
                                   <label
                                     id={`${domId}-attachments-label`}
                                     htmlFor={`${domId}-attachments`}
-                                    className="font-weight-bold mb-0"
+                                    className="font-weight-bold mb-0 aldis-required-label"
                                   >
-                                    Supporting Evidence{" "}
-                                    <span className="font-weight-normal text-muted">
-                                      (optional)
-                                    </span>
+                                    Supporting Evidence
                                   </label>
                                   <span
-                                    className={`badge badge-pill ${remainingFiles === 0 ? "badge-success" : "badge-secondary"}`}
+                                    className={`badge badge-pill ${draft.attachments.length < MIN_FILES_PER_FINDING ? "badge-warning" : remainingFiles === 0 ? "badge-success" : "badge-secondary"}`}
                                     aria-live="polite"
                                   >
                                     {draft.attachments.length} /{" "}
@@ -1189,8 +1267,9 @@ function ImprovementForm({
                                   className="small text-muted mb-3"
                                 >
                                   <strong>
-                                    Up to {MAX_FILES_PER_FINDING} files per
-                                    finding.
+                                    At least {MIN_FILES_PER_FINDING} file is
+                                    required per finding. Maximum{" "}
+                                    {MAX_FILES_PER_FINDING} files.
                                   </strong>{" "}
                                   {FILE_FORMATS} only. Add files together or one
                                   at a time.
@@ -1206,6 +1285,7 @@ function ImprovementForm({
                                   accept={FILE_ACCEPT}
                                   multiple
                                   hidden
+                                  aria-required="true"
                                   aria-describedby={`${domId}-attachments-help`}
                                   disabled={remainingFiles === 0}
                                   onChange={(event) => {
@@ -1267,7 +1347,9 @@ function ImprovementForm({
                                   </ul>
                                 ) : (
                                   <div className="small text-muted mt-3">
-                                    No files added yet.
+                                    No files added yet. Add at least{" "}
+                                    {MIN_FILES_PER_FINDING} file to submit this
+                                    finding.
                                   </div>
                                 )}
                               </div>
@@ -1285,30 +1367,13 @@ function ImprovementForm({
               style={{ gap: "1rem" }}
             >
               <div aria-live="polite">
-                <div
-                  className={
-                    saveStatus === "error"
-                      ? "text-danger"
-                      : saveStatus === "saved"
-                        ? "text-success"
-                        : "text-muted"
-                  }
-                >
-                  {saveMessage}
-                </div>
-                {lastSavedAt && (
-                  <small className="text-muted mr-2">
-                    {new Date(lastSavedAt).toLocaleTimeString("en-GB", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </small>
-                )}
+                <div className="mb-1">{renderSyncStatus()}</div>
+
                 {findings.length > 0 && (
-                  <small className="text-muted">
+                  <small className={allReady ? "text-success" : "text-muted"}>
                     {allReady
-                      ? "All findings are ready for submission."
-                      : `${findings.length - readyCount} findings still need improvement details.`}
+                      ? "All findings are complete and ready for submission."
+                      : `${findings.length - readyCount} ${findings.length - readyCount === 1 ? "finding" : "findings"} remaining before submission.`}
                   </small>
                 )}
                 {saveStatus === "error" && (
@@ -1337,19 +1402,25 @@ function ImprovementForm({
                   Back
                 </button>
                 {findings.length > 0 && (
-                  <button
-                    type="button"
-                    className="btn-hover-shine btn btn-primary"
-                    disabled={
-                      !isRecoveryReady ||
-                      isSubmitting ||
-                      !allReady ||
-                      missingAssignment
-                    }
-                    onClick={handleSubmitImprovement}
+                  <div
+                    className="aldis-tooltip-wrapper"
+                    data-tooltip={submitTooltip}
+                    role="group"
+                    aria-label={submitTooltip}
+                    tabIndex={isSubmitDisabled ? 0 : undefined}
                   >
-                    {isSubmitting ? "Please wait..." : "Submit Improvements"}
-                  </button>
+                    <button
+                      type="button"
+                      className="btn-hover-shine btn btn-primary"
+                      disabled={isSubmitDisabled}
+                      style={
+                        isSubmitDisabled ? { pointerEvents: "none" } : undefined
+                      }
+                      onClick={handleSubmitImprovement}
+                    >
+                      {isSubmitting ? "Please wait..." : "Submit Improvements"}
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
