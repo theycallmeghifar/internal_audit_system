@@ -1,6 +1,66 @@
-@Aldis.Api_HostAddress = http://localhost:5154
+@Aldis.Api_HostAddress = http://localhost:8001
 
-GET {{Aldis.Api_HostAddress}}/weatherforecast/
+### 1. IsoCategory - Get All
+GET {{Aldis.Api_HostAddress}}/api/IsoCategory
 Accept: application/json
 
-###
+### 2. IsoCategory - Create
+POST {{Aldis.Api_HostAddress}}/api/IsoCategory
+Content-Type: application/json
+
+{
+  "name": "Quality Management",
+  "createdBy": "admin"
+}
+
+### 3. IsoStandard - Get All
+GET {{Aldis.Api_HostAddress}}/api/IsoStandard
+Accept: application/json
+
+### 4. IsoStandard - Create
+POST {{Aldis.Api_HostAddress}}/api/IsoStandard
+Content-Type: application/json
+
+{
+  "code": "ISO 9001",
+  "version": "2015",
+  "title": "Quality Management Systems",
+  "categoryId": 1,
+  "effectiveDate": "2026-08-31",
+  "createdBy": "admin"
+}
+
+### 5. Department - Get All
+GET {{Aldis.Api_HostAddress}}/api/Department
+Accept: application/json
+
+### 6. Department - Create
+POST {{Aldis.Api_HostAddress}}/api/Department
+Content-Type: application/json
+
+{
+  "code": "MSTD",
+  "name": "Manufacturing Technology Development",
+  "headUserId": null,
+  "createdBy": "admin"
+}
+
+### 7. User - Get All
+GET {{Aldis.Api_HostAddress}}/api/User
+Accept: application/json
+
+### 8. User - Create
+POST {{Aldis.Api_HostAddress}}/api/User
+Content-Type: application/json
+
+{
+  "employeeId": "251001740",
+  "fullname": "Muhammad Al Ghifari",
+  "nickname": "Ghifar",
+  "email": "muhammad.ghifari@lmc.co.id",
+  "departmentId": 1,
+  "jobLevel": "Staff",
+  "jobTitle": "Manufacturing Technology Development Staff",
+  "role": "administrator",
+  "createdBy": "admin"
+}

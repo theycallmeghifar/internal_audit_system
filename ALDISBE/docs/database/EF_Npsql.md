@@ -1,31 +1,78 @@
-Aldis.Infrastructure
+# Entity Framework Core & PostgreSQL (Npgsql) Migration Guide
+
+## Project Structure
+
+```
+src/
+├── Aldis.Domain
+│   ├── Common/BaseAldisTableEntity.cs
+│   └── Entities/
 │
-├── AldisDbContext
-├── EntityConfiguration
-└── Migrations
-       ↑
-       │ target project
-
-Aldis.Api
+├── Aldis.Persistence (Target Project)
+│   ├── Context/AldisDbContext.cs
+│   ├── Context/AldisDbContextFactory.cs
+│   ├── Configurations/
+│   ├── DependencyInjection.cs
+│   └── Migrations/
 │
-├── Program.cs
-├── appsettings.json
-├── ConnectionStrings
-└── AddDbContext(...)
-       ↑
-       │ startup project
-       │
-       └── menyediakan DbContextOptions<AldisDbContext>
+└── Aldis.Api (Startup Project)
+    ├── Program.cs
+    ├── appsettings.json
+    └── appsettings.Development.json
+```
 
+---
 
-## script add migration      
-Execute Script from path "C:\Projects\jp-ent-platform\src\Aldis.Infrastructure>"
+## Connection String Configuration
 
-dotnet ef migrations add AddAuditLogToReferenceRequestDetails `
-    --startup-project ../Aldis.Api
+In `src/Aldis.Api/appsettings.json` and `src/Aldis.Api/appsettings.Development.json`:
 
-## script database update
-Execute Script from path "C:\Projects\jp-ent-platform\src\Aldis.Infrastructure>"
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=aldis;Username=postgres;Password=12345"
+  }
+}
+```
+
+---
+
+## Migration Scripts
+
+### 1. From Solution Root (`ALDISBE`):
+
+#### Add Migration
+```powershell
+dotnet ef migrations add <MigrationName> `
+    --project src/Aldis.Persistence `
+    --startup-project src/Aldis.Api
+```
+
+#### Update Database
+```powershell
 dotnet ef database update `
-    --startup-project ../Aldis.Api
+    --project src/Aldis.Persistence `
+    --startup-project src/Aldis.Api
+```
 
+#### Remove Last Migration (Before Applying to DB)
+```powershell
+dotnet ef migrations remove `
+    --project src/Aldis.Persistence `
+    --startup-project src/Aldis.Api
+```
+
+---
+
+### 2. From Persistence Directory (`ALDISBE/src/Aldis.Persistence`):
+
+#### Add Migration
+```powershell
+cd src/Aldis.Persistence
+dotnet ef migrations add <MigrationName> --startup-project ../Aldis.Api
+```
+
+#### Update Database
+```powershell
+dotnet ef database update --startup-project ../Aldis.Api
+```
