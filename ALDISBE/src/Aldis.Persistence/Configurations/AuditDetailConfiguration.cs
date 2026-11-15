@@ -41,6 +41,12 @@ public class AuditDetailConfiguration : IEntityTypeConfiguration<AuditDetailEnti
         builder.Property(d => d.Status)
             .HasMaxLength(50);
 
+        builder.Property(d => d.ReviewDecision)
+            .HasMaxLength(20);
+
+        builder.Property(d => d.ReviewedBy)
+            .HasMaxLength(100);
+
         builder.HasOne(d => d.AuditHeader)
             .WithMany(h => h.AuditDetails)
             .HasForeignKey(d => d.AuditHeaderId)

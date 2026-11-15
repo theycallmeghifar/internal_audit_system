@@ -28,6 +28,9 @@ public class IsoStandardService : IIsoStandardService
         if (string.IsNullOrWhiteSpace(request.Title))
             return ApiResponse<int>.Fail("Standard title is required.");
 
+        if (request.CategoryId <= 0)
+            request.CategoryId = null;
+
         var newId = await _isoStandardRepository.CreateIsoStandardAsync(request, cancellationToken);
         return ApiResponse<int>.Ok(newId, "Standard created successfully.");
     }

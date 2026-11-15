@@ -63,7 +63,7 @@ public class DepartmentRepository : IDepartmentRepository
 
         AddParameter(command, "@p_code", request.Code);
         AddParameter(command, "@p_name", request.Name);
-        AddParameter(command, "@p_head_user_id", (object?)request.HeadUserId ?? DBNull.Value);
+        AddParameter(command, "@p_head_user_id", request.HeadUserId > 0 ? request.HeadUserId.Value : DBNull.Value);
         AddParameter(command, "@p_created_by", string.IsNullOrWhiteSpace(request.CreatedBy) ? "system" : request.CreatedBy);
 
         var result = await command.ExecuteScalarAsync(cancellationToken);

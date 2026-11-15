@@ -28,6 +28,9 @@ public class DepartmentService : IDepartmentService
         if (string.IsNullOrWhiteSpace(request.Name))
             return ApiResponse<int>.Fail("Department name is required.");
 
+        if (request.HeadUserId <= 0)
+            request.HeadUserId = null;
+
         var newId = await _departmentRepository.CreateDepartmentAsync(request, cancellationToken);
         return ApiResponse<int>.Ok(newId, "Department created successfully.");
     }

@@ -18,6 +18,11 @@ public class AuditDetailEntity : BaseAldisTableEntity
     public string? ImprovementCorrectiveAction { get; set; }
     public string? Status { get; set; }
 
+    // Hasil review improvement oleh auditor (APPROVE / RETURN)
+    public string? ReviewDecision { get; set; }
+    public string? ReviewedBy { get; set; }
+    public DateTime? ReviewedDate { get; set; }
+
     // Navigation properties
     public virtual AuditHeaderEntity AuditHeader { get; set; } = null!;
     public virtual UserEntity? Pic { get; set; }

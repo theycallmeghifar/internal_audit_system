@@ -34,7 +34,7 @@ BEGIN
         job_level, job_title, role, created_by, created_date, is_active
     )
     VALUES (
-        p_employee_id, p_fullname, p_nickname, p_email, p_department_id,
+        p_employee_id, p_fullname, p_nickname, p_email, NULLIF(p_department_id, 0),
         p_job_level, p_job_title, p_role, p_created_by, CURRENT_TIMESTAMP, true
     )
     RETURNING id INTO v_new_id;
@@ -109,7 +109,7 @@ DECLARE
     v_new_id INT;
 BEGIN
     INSERT INTO departments (code, name, head_user_id, created_by, created_date, is_active)
-    VALUES (p_code, p_name, p_head_user_id, p_created_by, CURRENT_TIMESTAMP, true)
+    VALUES (p_code, p_name, NULLIF(p_head_user_id, 0), p_created_by, CURRENT_TIMESTAMP, true)
     RETURNING id INTO v_new_id;
 
     RETURN v_new_id;
@@ -230,7 +230,7 @@ DECLARE
     v_new_id INT;
 BEGIN
     INSERT INTO iso_standards (code, version, title, category_id, effective_date, created_by, created_date, is_active)
-    VALUES (p_code, p_version, p_title, p_category_id, p_effective_date, p_created_by, CURRENT_TIMESTAMP, true)
+    VALUES (p_code, p_version, p_title, NULLIF(p_category_id, 0), p_effective_date, p_created_by, CURRENT_TIMESTAMP, true)
     RETURNING id INTO v_new_id;
 
     RETURN v_new_id;

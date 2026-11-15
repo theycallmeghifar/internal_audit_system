@@ -31,6 +31,9 @@ public class UserService : IUserService
         if (string.IsNullOrWhiteSpace(request.Email))
             return ApiResponse<int>.Fail("Email is required.");
 
+        if (request.DepartmentId <= 0)
+            request.DepartmentId = null;
+
         var newId = await _userRepository.CreateUserAsync(request, cancellationToken);
         return ApiResponse<int>.Ok(newId, "User created successfully.");
     }

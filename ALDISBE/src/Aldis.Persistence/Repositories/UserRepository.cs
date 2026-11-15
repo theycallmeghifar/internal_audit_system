@@ -69,7 +69,7 @@ public class UserRepository : IUserRepository
         AddParameter(command, "@p_fullname", request.Fullname);
         AddParameter(command, "@p_nickname", (object?)request.Nickname ?? DBNull.Value);
         AddParameter(command, "@p_email", request.Email);
-        AddParameter(command, "@p_department_id", (object?)request.DepartmentId ?? DBNull.Value);
+        AddParameter(command, "@p_department_id", request.DepartmentId > 0 ? request.DepartmentId.Value : DBNull.Value);
         AddParameter(command, "@p_job_level", (object?)request.JobLevel ?? DBNull.Value);
         AddParameter(command, "@p_job_title", (object?)request.JobTitle ?? DBNull.Value);
         AddParameter(command, "@p_role", (object?)request.Role ?? DBNull.Value);

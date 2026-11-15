@@ -8,7 +8,12 @@ public class AuditHeaderEntity : BaseAldisTableEntity
     public int? IsoStandardId { get; set; }
     public int? DepartmentId { get; set; }
     public DateOnly AuditDate { get; set; }
+    public TimeOnly? AuditTime { get; set; }
     public string? Status { get; set; }
+
+    // Diisi saat auditor menekan Start Audit / pertama kali menyimpan checksheet.
+    public string? StartedBy { get; set; }
+    public DateTime? StartedDate { get; set; }
 
     // Navigation properties
     public virtual IsoStandardEntity? IsoStandard { get; set; }

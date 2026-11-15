@@ -340,6 +340,20 @@ namespace Aldis.Persistence.Migrations
                         .HasColumnType("character varying(255)")
                         .HasColumnName("reference_document");
 
+                    b.Property<string>("ReviewDecision")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("review_decision");
+
+                    b.Property<string>("ReviewedBy")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("reviewed_by");
+
+                    b.Property<DateTime?>("ReviewedDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("reviewed_date");
+
                     b.Property<string>("StandardReference")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -385,6 +399,10 @@ namespace Aldis.Persistence.Migrations
                         .HasColumnType("date")
                         .HasColumnName("audit_date");
 
+                    b.Property<TimeOnly?>("AuditTime")
+                        .HasColumnType("time without time zone")
+                        .HasColumnName("audit_time");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -410,6 +428,15 @@ namespace Aldis.Persistence.Migrations
                     b.Property<int?>("IsoStandardId")
                         .HasColumnType("integer")
                         .HasColumnName("iso_standard_id");
+
+                    b.Property<string>("StartedBy")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("started_by");
+
+                    b.Property<DateTime?>("StartedDate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("started_date");
 
                     b.Property<string>("Status")
                         .HasMaxLength(50)

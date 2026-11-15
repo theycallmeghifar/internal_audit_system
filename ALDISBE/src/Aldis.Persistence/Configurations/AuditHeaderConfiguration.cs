@@ -22,6 +22,9 @@ public class AuditHeaderConfiguration : IEntityTypeConfiguration<AuditHeaderEnti
         builder.Property(h => h.Status)
             .HasMaxLength(50);
 
+        builder.Property(h => h.StartedBy)
+            .HasMaxLength(100);
+
         builder.HasOne(h => h.IsoStandard)
             .WithMany(s => s.AuditHeaders)
             .HasForeignKey(h => h.IsoStandardId)

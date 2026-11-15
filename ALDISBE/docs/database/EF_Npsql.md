@@ -37,6 +37,27 @@ In `src/Aldis.Api/appsettings.json` and `src/Aldis.Api/appsettings.Development.j
 
 ---
 
+## Automatic Migration on Application Startup
+
+Proyek `Aldis.Api` telah dikonfigurasi untuk menjalankan EF Core Migration secara otomatis setiap kali aplikasi dijalankan (`dotnet run`).
+
+Ekstensi migrasi berada di `Aldis.Persistence`:
+- File: `src/Aldis.Persistence/Extensions/MigrationExtensions.cs`
+- Dipanggil di `src/Aldis.Api/Program.cs`:
+  ```csharp
+  var app = builder.Build();
+
+  // Automatically apply database migrations on startup
+  await app.Services.ApplyMigrationsAsync();
+  ```
+
+Fitur:
+1. Memeriksa apakah ada *pending migrations*.
+2. Jika ada, migrasi akan dijalankan secara otomatis (`MigrateAsync()`), termasuk membuat database jika belum ada.
+3. Mencatat log informasi ke logger (`Information` / `Warning` / `Error`).
+
+---
+
 ## Migration Scripts
 
 ### 1. From Solution Root (`ALDISBE`):

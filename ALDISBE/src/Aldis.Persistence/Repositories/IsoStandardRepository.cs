@@ -59,25 +59,29 @@ public class IsoStandardRepository : IIsoStandardRepository
             await connection.OpenAsync(cancellationToken);
 
         await using var command = connection.CreateCommand();
-        command.CommandText = "SELECT sp_create_iso_standard(@p_code, @p_version, @p_title, @p_category_id, @p_effective_date, @p_created_by);";
+        command.CommandText = "SELECT sp_create_iso_standard(@p_code, @p_version, @p_title, @p_category_id, @p_effective_date::date, @p_created_by);";
         command.CommandType = CommandType.Text;
 
         AddParameter(command, "@p_code", request.Code);
         AddParameter(command, "@p_version", (object?)request.Version ?? DBNull.Value);
         AddParameter(command, "@p_title", request.Title);
-        AddParameter(command, "@p_category_id", (object?)request.CategoryId ?? DBNull.Value);
-        AddParameter(command, "@p_effective_date", request.EffectiveDate.HasValue ? request.EffectiveDate.Value.ToDateTime(TimeOnly.MinValue) : DBNull.Value);
+        AddParameter(command, "@p_category_id", request.CategoryId > 0 ? request.CategoryId.Value : DBNull.Value);
+        AddParameter(command, "@p_effective_date", request.EffectiveDate.HasValue ? request.EffectiveDate.Value : DBNull.Value, DbType.Date);
         AddParameter(command, "@p_created_by", string.IsNullOrWhiteSpace(request.CreatedBy) ? "system" : request.CreatedBy);
 
         var result = await command.ExecuteScalarAsync(cancellationToken);
         return Convert.ToInt32(result);
     }
 
-    private static void AddParameter(DbCommand command, string name, object value)
+    private static void AddParameter(DbCommand command, string name, object value, DbType? dbType = null)
     {
         var parameter = command.CreateParameter();
         parameter.ParameterName = name;
         parameter.Value = value;
+        if (dbType.HasValue)
+        {
+            parameter.DbType = dbType.Value;
+        }
         command.Parameters.Add(parameter);
     }
 }

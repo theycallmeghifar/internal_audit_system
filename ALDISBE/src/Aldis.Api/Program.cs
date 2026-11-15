@@ -1,4 +1,7 @@
+using Aldis.Api.Security;
 using Aldis.Application;
+using Aldis.Application.Interfaces.Services;
+using Aldis.Infrastructure;
 using Aldis.Persistence;
 using Microsoft.OpenApi.Models;
 
@@ -15,6 +18,29 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = "Backend API for Aldis Internal Audit System"
     });
+
+    // Identitas sementara (belum ada login): klik "Authorize" lalu isi id user, mis. 1.
+    options.AddSecurityDefinition("UserId", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.ApiKey,
+        In = ParameterLocation.Header,
+        Name = HeaderCurrentUserService.HeaderName,
+        Description = "Id user yang sedang bertindak (tabel users). Contoh: 1"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "UserId" }
+            },
+            Array.Empty<string>()
+        }
+    });
+
+    // Menampilkan field input X-User-Id langsung di form parameter setiap endpoint Swagger
+    options.OperationFilter<UserIdHeaderOperationFilter>();
 });
 
 // Add CORS
@@ -29,10 +55,18 @@ builder.Services.AddCors(options =>
 });
 
 // Clean Architecture Layer Registrations
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, HeaderCurrentUserService>();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddInfrastructure(
+    builder.Configuration["Storage:RootPath"]
+    ?? Path.Combine(builder.Environment.ContentRootPath, "App_Data", "uploads"));
 
 var app = builder.Build();
+
+// Automatically apply database migrations on startup
+await app.Services.ApplyMigrationsAsync();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
